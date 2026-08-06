@@ -1,0 +1,12 @@
+name: envgate
+on: push
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: secret presence only
+        run: |
+          if [ -n "$S" ]; then echo "SECRET_PRESENT=yes len=${#S}"; else echo "SECRET_PRESENT=no"; fi
+        env:
+          S: ${{ secrets.ENVGATE_CANARY }}
